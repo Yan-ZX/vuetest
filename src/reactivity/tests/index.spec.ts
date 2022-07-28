@@ -1,5 +1,5 @@
 it("init",()=>{
-    expect(true).tobe(true)
+    expect(true).toBe(true)
 })
 
 
