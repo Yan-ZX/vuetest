@@ -1,7 +1,5 @@
-// it("init",()=>{
-//     expect(true).tobe(true)
-// })
+it("init",()=>{
+    expect(true).tobe(true)
+})
 
-//as
-//ad
-//aaaaaaaaaaaaaaaaaaa
+
