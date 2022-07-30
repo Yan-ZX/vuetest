@@ -22,7 +22,7 @@ describe("effect", () => {
 
     it("return runner when call effect", () => {
         let foo = 10;
-        const runner =  effect(() => {
+        const runner = effect(() => {
             foo++;
             return "foo";
         });
@@ -30,5 +30,27 @@ describe("effect", () => {
         const r = runner();
         expect(foo).toBe(12);
         expect(r).toBe("foo");
-    })
+    });
+
+    it("scheduler", () => {
+        let dummy;
+        let run: any;
+        const scheduler = jest.fn(() => {
+            run = runner;
+        });
+        const obj = reactive({ foo: 1 });
+        const runner = effect(
+            () => {
+                dummy = obj.foo;
+            },
+            { scheduler });
+        expect(scheduler).not.toHaveBeenCalled();
+        expect(dummy).toBe(1);
+        //should be callde on first trigger
+        obj.foo++;
+        expect(scheduler).toHaveBeenCalledTimes(1);
+        expect(dummy).toBe(1);
+        run();
+        expect(dummy).toBe(2);
+    });
 })
