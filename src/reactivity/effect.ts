@@ -1,6 +1,5 @@
 import { extend } from '../shared/index';
 
-
 class ReactiveEffect{
     private _fn: any;
     deps = [];
@@ -30,6 +29,8 @@ function clearnupEffect(effect) {
         dep.delete(effect)
     })
 }
+
+
 const targetMap = new Map();
 export function track(target, key) {
     // target -> key -> dep
