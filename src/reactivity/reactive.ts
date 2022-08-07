@@ -11,6 +11,14 @@ function createGetter(isReadonly = false) {
     }
 }
 
+function createSetter() {
+    return function set(target, key, value) {
+        const res = Reflect.set(target, key, value) ;
+        //TODO 触发依赖
+        trigger(target, key);
+        return res;
+    }
+}
 
 export function reactive(raw) {
     return new Proxy(raw, {
@@ -21,14 +29,14 @@ export function reactive(raw) {
         //     track(target, key);
         //     return res
         // },
-
-        set(target, key, value) {
-            const res = Reflect.set(target, key, value) ;
+        set:createSetter()
+        // set(target, key, value) {
+        //     const res = Reflect.set(target, key, value) ;
         
-            //TODO 触发依赖
-            trigger(target, key);
-            return res;
-        }
+        //     //TODO 触发依赖
+        //     trigger(target, key);
+        //     return res;
+        // }
     })
 }
 
