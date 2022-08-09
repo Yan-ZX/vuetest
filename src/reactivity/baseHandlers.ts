@@ -1,7 +1,8 @@
 import { track, trigger } from './effect';
 import { readonly } from './reactive';
 
-
+const get = createGetter();
+const set = createSetter();
 function createGetter(isReadonly = false) {
     return function get(target, key) {
         const res = Reflect.get(target, key);
@@ -23,8 +24,8 @@ function createSetter() {
 }
 
 export const mutableHandlers = {
-    get: createGetter(),
-    set: createSetter(),
+    get,
+    set,
 }
 export const readonlyHandlers = {
     get: createGetter(true),
