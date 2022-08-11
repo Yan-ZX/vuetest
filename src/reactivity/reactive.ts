@@ -9,7 +9,6 @@ export function reactive(raw) {
 }
 
 export function readonly(raw) {
-
     return createAcctiveObject(raw, readonlyHandlers)
 }
 
