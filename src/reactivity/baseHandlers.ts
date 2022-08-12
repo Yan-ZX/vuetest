@@ -5,7 +5,7 @@ const get = createGetter();
 const set = createSetter();
 const readonlyGet = createGetter(true);
 
-const res = 1;
+
 
 function createGetter(isReadonly = false) {
     return function get(target, key) {
@@ -34,6 +34,7 @@ export const mutableHandlers = {
 export const readonlyHandlers = {
     get: readonlyGet,
     set(target, key, value) {
+        console.warn(`key:${key} cant set 失败。because target is readonly `, target)
         return true
     }
 }
