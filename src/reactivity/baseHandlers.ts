@@ -13,6 +13,8 @@ function createGetter(isReadonly = false) {
 
         if (key === ReactiveFlags.IS_REACTIVE) {
             return !isReadonly
+        } else if (key === ReactiveFlags.IS_READONLY) {
+            return isReadonly
         }
         //TODO 依赖收集
         if (!isReadonly) {
