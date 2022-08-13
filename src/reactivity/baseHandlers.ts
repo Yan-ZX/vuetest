@@ -5,8 +5,6 @@ const get = createGetter();
 const set = createSetter();
 const readonlyGet = createGetter(true);
 
-
-
 function createGetter(isReadonly = false) {
     return function get(target, key) {
         const res = Reflect.get(target, key);
