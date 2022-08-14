@@ -30,7 +30,6 @@ function clearnupEffect(effect) {
     })
 }
 
-
 const targetMap = new Map();
 export function track(target, key) {
     // target -> key -> dep
@@ -68,6 +67,7 @@ export function stop(runner) {
 }
 
 let activeEffect;
+
 export function effect(fn, options: any = {}) {
 
     const _effect = new ReactiveEffect(fn,options.scheduler);
