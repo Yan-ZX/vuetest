@@ -1,5 +1,10 @@
 import { extend } from '../shared/index';
 
+
+let activeEffect;
+let shouldTrack;
+
+
 class ReactiveEffect{
     private _fn: any;
     deps = [];
@@ -10,7 +15,17 @@ class ReactiveEffect{
     }
     run() {
         activeEffect = this;
-        return this._fn();
+
+        if (this.active == false) {
+            return this._fn()
+        }
+
+        shouldTrack = true;
+        activeEffect = this;
+        const result = this._fn();
+        shouldTrack = false;
+
+        return result;
     }
     stop() {
         if (this.active) {
@@ -45,6 +60,9 @@ export function track(target, key) {
         depsMap.set(key, dep);
     }
     if (!activeEffect) return;
+    if (!shouldTrack) return;
+
+
     dep.add(activeEffect);
     activeEffect.deps.push(dep);
 }
@@ -66,7 +84,7 @@ export function stop(runner) {
     runner.effect.stop();
 }
 
-let activeEffect;
+
 
 export function effect(fn, options: any = {}) {
 
