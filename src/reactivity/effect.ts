@@ -4,7 +4,6 @@ import { extend } from '../shared/index';
 let activeEffect;
 let shouldTrack;
 
-
 class ReactiveEffect{
     private _fn: any;
     deps = [];
