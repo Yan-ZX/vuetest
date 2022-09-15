@@ -46,6 +46,8 @@ function clearnupEffect(effect) {
 
 const targetMap = new Map();
 export function track(target, key) {
+    if (!isTracking()) return;
+
     // target -> key -> dep
     let depsMap = targetMap.get(target);
     if (!depsMap) {
@@ -58,12 +60,17 @@ export function track(target, key) {
         dep = new Set();
         depsMap.set(key, dep);
     }
-    if (!activeEffect) return;
-    if (!shouldTrack) return;
 
-
+    //已经在 dep 中
+    if (dep.has(activeEffect)) return;
     dep.add(activeEffect);
     activeEffect.deps.push(dep);
+}
+
+
+function isTracking() {
+    return shouldTrack && activeEffect !== undefined;
+
 }
 
 export function trigger(target, key) {
